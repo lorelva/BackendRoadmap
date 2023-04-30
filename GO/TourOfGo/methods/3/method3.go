@@ -23,9 +23,7 @@ func (c Circle) Perimeter() float32 {
 // create method to change the radius value
 func (c *Circle) ChangeValue(r float32) {
 	c.radius = r
-
 }
-
 func main() {
 	c := Circle{
 		radius: 6.7,
