@@ -13,7 +13,7 @@ func main() {
 	s = s[:2]
 	fmt.Println(s)
 
-	//why the number to the position 2? instead of 1
+	//why the number to the position 2? instead of position 1
 	s = s[1:]
 	fmt.Println(s)
 

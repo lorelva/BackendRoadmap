@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// length and capacity? whats for?
 func main() {
 	s := []int{2, 3, 5, 7, 11, 13}
 	printSlice(s)
