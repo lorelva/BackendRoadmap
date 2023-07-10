@@ -38,7 +38,8 @@ func main() {
 			log.Fatal("there was an error", err)
 		}
 
-		fmt.Printf("Name: %s Age: %d Gender: %s  \n", p.FullName, p.Age, p.Gender)
+		fmt.Printf("Name: %s\n Age: %d\n Gender: %s\n Weight: %f\n Height: %f\n",
+			p.FullName, p.Age, p.Gender, p.Weight, p.Height)
 
 		fmt.Println("The IMC or BMI is", p.Bmi())
 

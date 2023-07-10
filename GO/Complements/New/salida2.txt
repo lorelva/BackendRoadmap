@@ -1,0 +1,30 @@
+Name: Christian
+ Age: 21
+ Gender: Male
+ Weight: 70.200000
+ Height: 1.680000
+The IMC or BMI is 24.87245
+Name: Christian Hernandez Najera
+ Age: 21
+ Gender: Male
+ Weight: 72.000000
+ Height: 1.700000
+The IMC or BMI is 24.913494
+Name: Christian Hernandez Najera
+ Age: 21
+ Gender: Male
+ Weight: 72.000000
+ Height: 1.700000
+The IMC or BMI is 24.913494
+Name: Christian Hernandez Najera
+ Age: 21
+ Gender: Male
+ Weight: 72.000000
+ Height: 1.700000
+The IMC or BMI is 24.913494
+Name: Christian Hernandez Najera
+ Age: 21
+ Gender: Male
+ Weight: 72.000000
+ Height: 1.700000
+The IMC or BMI is 24.913494
