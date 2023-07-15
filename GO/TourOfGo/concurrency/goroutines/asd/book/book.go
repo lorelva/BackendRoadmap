@@ -1,6 +1,8 @@
-package main
+package book
 
 import "fmt"
+
+//type Book string
 
 type Book struct {
 	ID            int
