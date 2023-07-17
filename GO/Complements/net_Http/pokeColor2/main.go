@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	color "lorelval/BackendRoadmap.com/poke"
 	"net/http"
 )
 
@@ -20,7 +21,7 @@ func main() {
 	}
 
 	if response.StatusCode >= 300 {
-		errors.New("este request dio un codigo de respuesta mayor a 300")
+		errors.New("request higher than 300")
 	}
 
 	defer response.Body.Close()
@@ -30,13 +31,15 @@ func main() {
 		log.Fatal(err)
 	}
 
-	pokes := make(map[string]interface{})
+	pokes := color.PokeColor{}
 
+	// Unmarshal para pasar los bytes a un struct
 	err = json.Unmarshal(byteResponse, &pokes)
 	if err != nil {
-		errors.New(fmt.Sprintf("no puedo hacer Unmarshal de: %v", byteResponse))
+		errors.New(fmt.Sprintf("Can't do Unmarshal of: %v", byteResponse))
 	}
 
-	fmt.Println(pokes)
-	fmt.Println(pokes["color"])
+	fmt.Println(pokes..Name)
+	fmt.Println(pokes..URL)
+
 }
