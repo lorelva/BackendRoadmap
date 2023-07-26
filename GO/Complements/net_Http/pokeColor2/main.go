@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"io"
 	"log"
-	color "lorelval/BackendRoadmap.com/poke"
+	"lorelval/BackendRoadmap.com/poke"
 	"net/http"
 )
 
 func main() {
-	pokeURL := "https://pokeapi.co/api/v2/pokemon-color/7/"
+	pokeURL := "https://pokeapi.co/api/v2/pokemon-species/132/"
 
 	client := &http.Client{}
 
@@ -31,7 +31,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	pokes := color.PokeColor{}
+	pokes := poke.PokeColor{}
 
 	// Unmarshal para pasar los bytes a un struct
 	err = json.Unmarshal(byteResponse, &pokes)
@@ -39,7 +39,9 @@ func main() {
 		errors.New(fmt.Sprintf("Can't do Unmarshal of: %v", byteResponse))
 	}
 
-	fmt.Println(pokes..Name)
-	fmt.Println(pokes..URL)
+	fmt.Println(pokes.Color.Name)
+	fmt.Println(pokes.Color.URL)
+	fmt.Println(pokes.FlavorTextEntries[0].FlavorText)
+	//fmt.Println(string(byteResponse))
 
 }

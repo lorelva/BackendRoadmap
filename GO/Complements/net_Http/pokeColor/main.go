@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	pokeURL := "https://pokeapi.co/api/v2/pokemon-color/7/"
+	pokeURL := "https://pokeapi.co/api/v2/pokemon-species/132/"
 
 	client := &http.Client{}
 
@@ -20,7 +20,7 @@ func main() {
 	}
 
 	if response.StatusCode >= 300 {
-		errors.New("este request dio un codigo de respuesta mayor a 300")
+		log.Fatal(errors.New("este request dio un codigo de respuesta mayor a 300"))
 	}
 
 	defer response.Body.Close()
@@ -34,9 +34,9 @@ func main() {
 
 	err = json.Unmarshal(byteResponse, &pokes)
 	if err != nil {
-		errors.New(fmt.Sprintf("no puedo hacer Unmarshal de: %v", byteResponse))
+		log.Fatal(errors.New(fmt.Sprintf("no puedo hacer Unmarshal de: %v", byteResponse)))
 	}
 
-	fmt.Println(pokes)
+	//fmt.Println(pokes)
 	fmt.Println(pokes["color"])
 }
