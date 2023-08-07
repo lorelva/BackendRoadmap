@@ -44,10 +44,6 @@ func mapasV1() {
 
 }
 
-//valores de divisas mnx a dolar
-//numero de niños o morros en un salon
-//crear mapa para edades de personas
-
 func mapasV2() {
 
 }
