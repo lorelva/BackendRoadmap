@@ -17,23 +17,26 @@ func main() {
 		"Karma",
 	}
 	// si existe
-	cancionBuscar := "Jaded"
-	/*var cancionBuscar2 string
-	fmt.Println("Introduce el nombre de una canción: ")
-	fmt.Scanln(&cancionBuscar2)
-	*/
-	resultado := buscarCancion(listaCancion, cancionBuscar)
-	fmt.Printf("La canción introducida %v se encontró: %v\n", cancionBuscar, resultado)
+	//cancionBuscar := "Jaded"
+	//cancionBuscar := "Those nights"
+	//resultado := buscarCancion(listaCancion, cancionBuscar)
+	//resultado := fmt.Println(buscarCancion(listaCancion, "Those nights"))
+	//fmt.Printf("La canción introducida %v se encontró: %v\n", cancionBuscar, resultado)
+	fmt.Println(buscarCancion(listaCancion, "Those nights"))
 
 }
 
 // función para buscar el elemento deseado
 func buscarCancion(listaCancion []string, cancionBuscar string) bool {
-	for i := 0; i < len(listaCancion); i++ {
-		for k := 0; k < len(listaCancion); k++ {
-			if cancionBuscar == listaCancion[k] {
-				return true
-			}
+	/*for i := 0; i < len(listaCancion); i++ {
+		if cancionBuscar == listaCancion[i] {
+			return true
+		}
+	}
+	*/
+	for _, v := range listaCancion {
+		if v == cancionBuscar {
+			return true
 		}
 		//fmt.Println(listaCancion[i])
 	}
