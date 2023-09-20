@@ -26,5 +26,4 @@ func aVeryBigSum(input []int64) int64 {
 		total = total + element
 	}
 
-	return total
 }
