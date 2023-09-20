@@ -25,5 +25,6 @@ func aVeryBigSum(input []int64) int64 {
 		//debe dar como resultado 11
 		total = total + element
 	}
+	return total
 
 }
