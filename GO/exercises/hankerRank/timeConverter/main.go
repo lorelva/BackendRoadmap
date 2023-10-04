@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 
@@ -11,6 +13,11 @@ func main() {
 }
 
 func timeConversion(s string) string {
+
+	//FORMAT not defined in the time package : HHMMSS12h = "3:04:05 PM"
+	stringtoConvert := s
+	outputString := "19:05:45"
+
 	return s
 
 }
