@@ -9,32 +9,48 @@ import (
 	"strings"
 )
 
-type Time struct {
+// CONVERT JSON FILE TO GO STRUCT
+// declare go struct
+type CustomTime struct {
 	TimeValue string `json:"time_value,omitempty"`
 }
 
 func main() {
-
+	//READ JSON FILE
 	content, err := os.ReadFile("./time.json")
 	if err != nil {
-		log.Fatal("There was an error", err)
+		log.Fatal(err)
 	}
 
-	//t := Time{}
-	t := Time{}
-	json.Unmarshal(content, &t)
+	//show the content of the json file
+	//fmt.Printf("File contents: %s", content)
+
+	t := CustomTime{}
+	//json.Unmarshal(content, &t)
 
 	err = json.Unmarshal(content, &t)
-
 	if err != nil {
-		log.Fatal("Error unexpected:", err)
+		log.Fatal("Error JSON Unmarshalling:", err)
 	}
 
+	fmt.Println(t)
+
+	//CONVERT STRUCT TO JSON
 	convertedTime := timeConversion(t)
-	fmt.Printf("Converted Time: %s\n", convertedTime)
+	resultado := CustomTime{
+		TimeValue: convertedTime,
+	}
+
+	resultEncoded, err := json.Marshal(resultado)
+	if err != nil {
+		log.Fatalf("Error: %v obtained", err)
+
+	}
+
+	fmt.Printf("Converted Time: %s\n", string(resultEncoded))
 }
 
-func timeConversion(t Time) string {
+func timeConversion(t CustomTime) string {
 
 	separateTime := strings.SplitAfter(t.TimeValue, ":")
 	hours := separateTime[0]
