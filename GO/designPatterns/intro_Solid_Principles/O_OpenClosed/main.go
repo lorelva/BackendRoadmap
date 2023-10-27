@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-//O --> OPEN-CLOSED PRINCIPLE
+//O --> OPEN-CLOSED PRINCIPLE (OCP)
 // STATEMENT: a struct should be open for extension but closed for modification
 
 // EXAMPLE -->payment system that will be able to process credit card payments
