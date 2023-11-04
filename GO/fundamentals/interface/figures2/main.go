@@ -89,6 +89,9 @@ func main() {
 		case 4:
 			f = &r
 
+		default:
+			fmt.Println("Opción incorrecta:")
+
 		}
 
 		resultado := f.Area()

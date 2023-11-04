@@ -10,6 +10,3 @@ func main() {
 	fmt.Printf("Tipo de datos: %T el valor es: %v\n", resultado, resultado)
 
 }
-
-//REcibir desde el usuario cualquier tipo de dato, dependiendo del dato:
-//int suma, float division, booleano mensaje que dia "Que se ingresó un booleano
