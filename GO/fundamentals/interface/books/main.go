@@ -48,7 +48,7 @@ func main() {
 	fmt.Println("Call interface")
 	i = &b    // Method has pointer receiver, interface does not
 	i.Print() // Show book values via the interface
-	i = &m    // Magazine also satisfies shower interface
-	i.Print() // Show magazine values via the interface
+	i = &m
+	i.Print()
 
 }
