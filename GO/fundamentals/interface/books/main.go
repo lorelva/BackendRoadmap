@@ -17,6 +17,7 @@ func (b *Book) Assign(n, t string) {
 	b.Title = t
 }
 
+// recomendación usar puntero para casos de modificar y tambien para leer/mostrar
 func (b *Book) Print() {
 	fmt.Printf("Author: %s, Title: %s\n", b.Author, b.Title)
 }
@@ -35,12 +36,15 @@ type Printer interface {
 }
 
 func main() {
-	var b Book                                 // Declare instance of Book
-	var m Magazine                             // Declare instance of Magazine
+	var (
+		b Book
+		m Magazine
+		i Printer
+	)
 	b.Assign("Jack Rabbit", "Book of Rabbits") // Assign values to b via method
-	m.Assign("Rabbit Weekly", 26)              // Assign values to m via method
+	b.Assign("ab", "hola")
+	m.Assign("Rabbit Weekly", 26) // Assign values to m via method
 
-	var i Printer // Declare variable of interface type
 	fmt.Println("Call interface")
 	i = &b    // Method has pointer receiver, interface does not
 	i.Print() // Show book values via the interface
