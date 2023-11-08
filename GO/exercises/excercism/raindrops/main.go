@@ -12,7 +12,7 @@ RULES FOR RAINDROPS
 */
 
 func main() {
-	number := 800
+	number := 9
 	result := Convert(number)
 	fmt.Println(result)
 
@@ -23,7 +23,7 @@ func Convert(number int) string {
 
 	var output string = ""
 	if number%3 == 0 {
-		output += "Ping"
+		output += "Pling"
 	}
 	if number%5 == 0 {
 		output += "Plang"
