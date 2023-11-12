@@ -1,0 +1,23 @@
+[x] S - Single Responsibility Principle (SRP)
+    This principle states that a struct should have only one 
+    reason to change, meaning that a struct should have only one responsibility. 
+    This helps to keep the code clean and maintainable, as changes to the
+    struct only need to be made in one place.
+
+
+[x] L - Liskov Substitution Principle (LSP)
+    This principle states that objects of a superclass should be 
+    replaceable with objects of a subclass without affecting the 
+    correctness of the program. 
+    This helps to ensure that the relationships between classes are well-defined and maintainable.
+
+[X] I - Interface Segregation Principle (ISP)
+    ISP states that clients should not be forced to 
+    depend on interfaces they do not use, meaning that the interfaces 
+    should be designed to be as small and specific as possible. 
+    This helps to keep the code flexible and avoids unnecessary coupling between classes.
+
+Main.go
+    ---> LogClient interface
+         	Log(message string)              ------| console -> package: logger
+	        Clean(msg string) (bool, error)  ------| file    -> package logger
