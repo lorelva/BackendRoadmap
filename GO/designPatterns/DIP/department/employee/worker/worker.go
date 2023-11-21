@@ -5,10 +5,10 @@ type Worker struct {
 	Name string
 }
 
-func (w Worker) GetID() int {
+func (w *Worker) GetID() int {
 	return w.ID
 }
 
-func (w Worker) GetName() string {
+func (w *Worker) GetName() string {
 	return w.Name
 }

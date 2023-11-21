@@ -1,11 +1,14 @@
 package department
 
-/*
+import (
+	"github.com/lorelva/designPatterns/DIP/department/employee"
+)
+
 type Department struct {
-	Employees []Employee
+	Employees []employee.Employee
 }
 
-func (d *Department) AddEmployee(e Employee) {
+func (d *Department) AddEmployee(e employee.Employee) {
 	d.Employees = append(d.Employees, e)
 }
 
@@ -16,7 +19,7 @@ func (d *Department) GetEmployeeNames() (res []string) {
 	return
 }
 
-func (d *Department) GetEmployee(id int) Employee {
+func (d *Department) GetEmployee(id int) employee.Employee {
 	for _, e := range d.Employees {
 		if e.GetID() == id {
 			return e
@@ -24,5 +27,3 @@ func (d *Department) GetEmployee(id int) Employee {
 	}
 	return nil
 }
-
-*/
