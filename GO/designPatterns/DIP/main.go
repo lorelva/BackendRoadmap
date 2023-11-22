@@ -31,11 +31,4 @@ func main() {
 	id := d.GetEmployee(2)
 	fmt.Println(id)
 
-	/*
-		//fmt.Println(d, s, w)
-		d.GetEmployee(s.ID)
-		d.GetEmployee(w.ID)
-		d.GetEmployeeNames(s.GetName)
-	*/
-
 }
