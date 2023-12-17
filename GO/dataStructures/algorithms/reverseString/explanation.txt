@@ -1,0 +1,53 @@
+/*
+	EXPLANATION ABOUT FUNCTIONALLITY OF THE PART OF CODE --> reverse = string(value) + reverse
+	STRING EXAMPLE: "hello"
+
+	1.- For range iterates for each character of the string
+
+	2.- Then first iteration:
+		FIRST CHARACTER--> H
+
+		Assign to variables:
+		value = h
+		string(value) = h (is like adding to an array)
+
+		string(value) adding to reverse, so...
+		reverse = "h"
+
+	3.- Second iteration:
+		SECOND CHARACTER: E
+
+		value before = h
+		Assign to variables:
+		value = e
+		string(value) = e + h
+		reverse = "e h"
+
+	4.- Third and fourth iteration:
+		THIRD AND FOURTH CHARACTER: L
+		value before = e
+
+		Assign to variables:
+		value = l
+		string(value) =  l + e + h
+		reverse = "l e h"
+
+		FOURTH CHARACTER: L
+		value before = l
+
+		Assign to variables:
+		value = l
+		string(value) =  l + l + e + h
+		reverse = "l l e h"
+
+	5.- Fifth iteration:
+		FIFTH CHARACTER: O
+		value before = l
+
+		Assign to variables:
+		value = o
+		string(value) =  o + l + l + e + h
+		reverse = "o l l e h"
+
+	6.- Final Content of the variable reverse = olleh
+*/
