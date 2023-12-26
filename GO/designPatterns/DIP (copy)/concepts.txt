@@ -1,0 +1,29 @@
+//  sintaxis de funciones
+// func saludo({paramaetros {tipo de dato}}) {valores de retorno} ...
+// 1- func saludo(nombre string) (string, error) {.....}
+// 2- func saludo(nombre string) string {....}
+// metodos...
+//  func ({variable} {nombre del struct}) saludo({parametros {tipo de dato}}) {valores de retorno} {......}
+// 3- func (p Persona) saludo(nombre string) string {...}
+
+// llamadas
+// 1- valor, err := saludo("Christian") || hola, adios := "asdda", "adsdasas"
+// 1.1- var valor string
+//      var err error = nil
+//      valor, err = saludo("Christian")
+// 2- valor := saludo("Lorena")
+// 2.1 - valor := ""
+//       valor = saludo("Lorena")
+// 3- p := Persona{}
+// 3- valor := p.saludo("Lorena")
+// db, err := sql.Open("mysql", cfg.FormatDSN())
+// if err != nil {......}
+// db.adsdadsadasdasdas
+
+// como obtener lo que retorna una funcion
+// Explicacion: de lado izquiero mis variable
+// de lado derecho mi llamado a funcion
+// (en este ejemplo esta funcion ficticia retorna 3 valores)
+// area, lados, largo := cuadrado()
+// {variables donde se guardan los valores de retorno} <- cuadrado()
+// cuadrado()
