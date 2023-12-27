@@ -37,17 +37,17 @@ func main() {
 	db := database.ConnectToTestTable()
 
 	//Crear tabla , accediendo a queries.go
-	queries.CrearTabla(db)
+	//queries.CrearTabla(db)
 
 	//Agregar datos a la tabla
-	queries.InsertarSucursal(db, "lol", 3)
-	queries.InsertarSucursal(db, "Revolución", 4)
-	queries.InsertarSucursal(db, "Lomas de Cortes", 5)
+	//queries.InsertarSucursal(db, "lol", 3)
+	//queries.InsertarSucursal(db, "Revolución", 4)
+	//queries.InsertarSucursal(db, "Lomas de Cortes", 5)
 
 	//Actualizar datos a la tabla
-	queries.ActualizarSucursal(db, "Teopanzolco", 3)
+	queries.ActualizarSucursal(db, "Centro", 3)
 
 	//Eliminar datos de la tabla
-	queries.EliminarSucursal(db, 5)
+	//queries.EliminarSucursal(db, 5)
 
 }
