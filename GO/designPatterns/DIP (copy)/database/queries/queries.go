@@ -64,10 +64,50 @@ func InsertarSucursal(db *sql.DB, direccion string, id int) {
 //UPDATE FROM SUCURSAL WHERE ID = ? SET DIRECCION = ?
 //DELETE FROM SUCURSAL WHERE ID = ?
 
-func ActualizarSucursal(db *sql.DB, id int, direccion string) {
+func ActualizarSucursal(db *sql.DB, direccion string, id int) {
+
+	result, err := db.Exec("UPDATE SUCURSAL SET DIRECCION = ? WHERE ID = ?", direccion, id)
+	if err != nil {
+		log.Println("No se pudo realizar la actualización de datos en la tabla sucursal, el error fue: ", err)
+		return
+	}
+
+	rowsUpdated, err := result.RowsAffected()
+	if err != nil {
+		log.Println("NO se pudo actualizar valores de las columnas modificadas: ", err)
+		return
+	}
+
+	if rowsUpdated > 0 {
+		log.Println("Se actualizó con exito en la tabla sucursal, los valores son: ", id, direccion)
+		return
+	} else if rowsUpdated == 0 {
+		log.Println("NO se pudo actualizar datos en la tabla sucursal")
+		return
+	}
 
 }
 
-func EliminarSucursal() {
+func EliminarSucursal(db *sql.DB, id int) {
+
+	result, err := db.Exec("DELETE FROM SUCURSAL WHERE ID = ?", id)
+	if err != nil {
+		log.Println("No se pudo eliminar el id en la tabla sucursal, el error fue: ", err)
+		return
+	}
+
+	rowsDeleted, err := result.RowsAffected()
+	if err != nil {
+		log.Println("NO se pudo eliminar valores de las columnas con el id solicitado: ", err)
+		return
+	}
+
+	if rowsDeleted > 0 {
+		log.Printf("Se eliminó con exito el id %v en la tabla sucursal", id)
+		return
+	} else if rowsDeleted == 0 {
+		log.Println("NO se pudo eliminar el id en la tabla sucursal")
+		return
+	}
 
 }
