@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 
+	"github.com/lorelva/designPatterns/DIP/database"
+	"github.com/lorelva/designPatterns/DIP/database/queries"
 	"github.com/lorelva/designPatterns/DIP/department"
 	"github.com/lorelva/designPatterns/DIP/department/employee/supervisor"
 	"github.com/lorelva/designPatterns/DIP/department/employee/worker"
@@ -30,5 +32,11 @@ func main() {
 
 	id := d.GetEmployee(2)
 	fmt.Println(id)
+
+	db := database.ConnectToTestTable()
+
+	queries.CrearTabla(db)
+
+	queries.InsertarSucursal(db, "lol", 3)
 
 }

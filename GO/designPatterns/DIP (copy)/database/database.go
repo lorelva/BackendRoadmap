@@ -4,6 +4,10 @@ import (
 	"database/sql"
 	"log"
 
+	//IMPORT ANONIMO
+	//En caso de no el paquete de mysql se debe importar agregando el guion bajo al inicio
+	//y no se borre
+	//EJEMPLO: _ "github.com/go-sql-driver/mysql"
 	"github.com/go-sql-driver/mysql"
 )
 
@@ -18,50 +22,24 @@ func ConnectToTestTable() *sql.DB {
 		Net:    "tcp",
 	}
 
+	//Tiene como parametro sql.Open el strind de driver y el segundp el string de conexión
 	db, err := sql.Open("mysql", cfg.FormatDSN())
 	if err != nil {
 		// debemos empezar a saber usar los log de fatal cuando deseamos acabar el programa
 		log.Fatalf("No se puede abrir la base de datos, el error fue %v \n", err)
 	}
 
+	//El ping siempre debe ser usado porque si no se aprecen bugs o errores.
 	// ping nos sirve para verificar la conexion
 	// TODO: probar el ping en realidad
+
 	err = db.Ping()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("No se pudo hacer ping , el error fue :", err)
 	}
 
 	// este valor de db contiene las funciones de mysql para ejecutar queries a la base de datos que apunta a nuestra
 	// tabla TEST
+	//retorno del puntero de sql
 	return db
 }
-
-//  sintaxis de funciones
-// func saludo({paramaetros {tipo de dato}}) {valores de retorno} ...
-// 1- func saludo(nombre string) (string, error) {.....}
-// 2- func saludo(nombre string) string {....}
-// metodos...
-//  func ({variable} {nombre del struct}) saludo({parametros {tipo de dato}}) {valores de retorno} {......}
-// 3- func (p Persona) saludo(nombre string) string {...}
-
-// llamadas
-// 1- valor, err := saludo("Christian") || hola, adios := "asdda", "adsdasas"
-// 1.1- var valor string
-//      var err error = nil
-//      valor, err = saludo("Christian")
-// 2- valor := saludo("Lorena")
-// 2.1 - valor := ""
-//       valor = saludo("Lorena")
-// 3- p := Persona{}
-// 3- valor := p.saludo("Lorena")
-// db, err := sql.Open("mysql", cfg.FormatDSN())
-// if err != nil {......}
-// db.adsdadsadasdasdas
-
-// como obtener lo que retorna una funcion
-// Explicacion: de lado izquiero mis variable
-// de lado derecho mi llamado a funcion
-// (en este ejemplo esta funcion ficticia retorna 3 valores)
-// area, lados, largo := cuadrado()
-// {variables donde se guardan los valores de retorno} <- cuadrado()
-// cuadrado()
