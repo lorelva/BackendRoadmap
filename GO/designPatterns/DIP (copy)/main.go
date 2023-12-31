@@ -45,9 +45,11 @@ func main() {
 	//queries.InsertarSucursal(db, "Lomas de Cortes", 5)
 
 	//Actualizar datos a la tabla
-	queries.ActualizarSucursal(db, "Centro", 3)
+	//queries.ActualizarSucursal(db, "Centro", 3)
 
 	//Eliminar datos de la tabla
 	//queries.EliminarSucursal(db, 5)
+
+	queries.ObtenerSucursal2(db)
 
 }

@@ -2,6 +2,7 @@ package queries
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 )
 
@@ -65,7 +66,6 @@ func InsertarSucursal(db *sql.DB, direccion string, id int) {
 //DELETE FROM SUCURSAL WHERE ID = ?
 
 func ActualizarSucursal(db *sql.DB, direccion string, id int) {
-
 	result, err := db.Exec("UPDATE SUCURSAL SET DIRECCION = ? WHERE ID = ?", direccion, id)
 	if err != nil {
 		log.Println("No se pudo realizar la actualización de datos en la tabla sucursal, el error fue: ", err)
@@ -85,11 +85,9 @@ func ActualizarSucursal(db *sql.DB, direccion string, id int) {
 		log.Println("NO se pudo actualizar datos en la tabla sucursal")
 		return
 	}
-
 }
 
 func EliminarSucursal(db *sql.DB, id int) {
-
 	result, err := db.Exec("DELETE FROM SUCURSAL WHERE ID = ?", id)
 	if err != nil {
 		log.Println("No se pudo eliminar el id en la tabla sucursal, el error fue: ", err)
@@ -109,5 +107,92 @@ func EliminarSucursal(db *sql.DB, id int) {
 		log.Println("NO se pudo eliminar el id en la tabla sucursal")
 		return
 	}
+}
 
+func ObtenerSucursal(db *sql.DB) {
+	var (
+		id        int
+		direccion string
+	)
+
+	rows, err := db.Query("SELECT * FROM SUCURSAL;")
+	if err != nil {
+		log.Println("No se pudo mostrar los datos de la tabla sucursal: ", err)
+		return
+	}
+
+	//en go no hay do while or while
+	//en este caso se usa un for para recorrer cada valor de la tabla(es como si fuese un while)
+	for rows.Next() {
+		//Siempre se lee de forma ordenda conforme a la tabla
+		//Se debe pasar la direccion de mmemoria de neutsra variable a guardar
+		err = rows.Scan(&id, &direccion)
+		//si error  no es nulo-->tiene algo
+		//si es nil -->no hay nada
+		if err != nil {
+			log.Println("No se pudo obtener la información, debido a: ", err)
+			return
+		}
+		fmt.Printf("El id es: %d, la direccion es: %s \n", id, direccion)
+	}
+}
+
+func ObtenerSucursal2(db *sql.DB) {
+	var (
+		id int
+		//Cuando hay valores nulos en la tabla , se deben usar los tipos de datos
+		//Del paquete database/sql de GO: NullSTring, NUllInt.....
+		direccion sql.NullString
+	)
+
+	rows, err := db.Query("SELECT * FROM SUCURSAL;")
+	if err != nil {
+		log.Println("No se pudo mostrar los datos de la tabla sucursal: ", err)
+		return
+	}
+
+	//en go no hay do while or while
+	//en este caso se usa un for para recorrer cada valor de la tabla(es como si fuese un while)
+	for rows.Next() {
+		//Siempre se lee de forma ordenda conforme a la tabla
+		//Se debe pasar la direccion de mmemoria de neutsra variable a guardar
+		err = rows.Scan(&id, &direccion)
+		//si error  no es nulo-->tiene algo
+		//si es nil -->no hay nada
+		if err != nil {
+			log.Println("No se pudo obtener la información, debido a: ", err)
+			return
+		}
+		fmt.Printf("El id es: %d, la direccion es: %s \n", id, direccion.String)
+	}
+}
+
+func ObtenerSucursalPorID(db *sql.DB, idSucursal int) {
+	var (
+		id int
+		//Cuando hay valores nulos en la tabla , se deben usar los tipos de datos
+		//Del paquete database/sql de GO: NullSTring, NUllInt.....
+		direccion sql.NullString
+	)
+
+	rows, err := db.Query("SELECT * FROM SUCURSAL;")
+	if err != nil {
+		log.Println("No se pudo mostrar los datos de la tabla sucursal: ", err)
+		return
+	}
+
+	//en go no hay do while or while
+	//en este caso se usa un for para recorrer cada valor de la tabla(es como si fuese un while)
+	for rows.Next() {
+		//Siempre se lee de forma ordenda conforme a la tabla
+		//Se debe pasar la direccion de mmemoria de neutsra variable a guardar
+		err = rows.Scan(&id, &direccion)
+		//si error  no es nulo-->tiene algo
+		//si es nil -->no hay nada
+		if err != nil {
+			log.Println("No se pudo obtener la información, debido a: ", err)
+			return
+		}
+		fmt.Printf("El id es: %d, la direccion es: %s \n", id, direccion.String)
+	}
 }
