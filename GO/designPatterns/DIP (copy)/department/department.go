@@ -1,29 +1,25 @@
 package department
 
 import (
+	"database/sql"
+
 	"github.com/lorelva/designPatterns/DIP/department/employee"
 )
 
 type Department struct {
-	Employees []employee.Employee
+	DB *sql.DB
 }
 
 func (d *Department) AddEmployee(e employee.Employee) {
-	d.Employees = append(d.Employees, e)
+	e.Add(d.DB)
 }
 
-func (d Department) GetEmployeeNames() (res []string) {
-	for _, e := range d.Employees {
-		res = append(res, e.GetName())
-	}
-	return
+func (d *Department) GetEmployeeNames(e employee.Employee) []string {
+	names := e.GetAllNames(d.DB)
+	return names
 }
 
-func (d Department) GetEmployee(id int) employee.Employee {
-	for _, e := range d.Employees {
-		if e.GetID() == id {
-			return e
-		}
-	}
-	return nil
+func (d *Department) GetEmployee(e employee.Employee, id int, name string) {
+	e.GetByID(d.DB, id)
+	e.GetByName(d.DB, name)
 }

@@ -4,37 +4,40 @@ import (
 	"fmt"
 
 	"github.com/lorelva/designPatterns/DIP/database"
-	"github.com/lorelva/designPatterns/DIP/database/queries"
 	"github.com/lorelva/designPatterns/DIP/department"
 	"github.com/lorelva/designPatterns/DIP/department/employee/supervisor"
 	"github.com/lorelva/designPatterns/DIP/department/employee/worker"
 )
 
 func main() {
+	//la segunda base de datos para departamento
+	departmentDB := database.ConnectToDepartment()
 
-	d := department.Department{}
+	d := department.Department{
+		DB: departmentDB,
+	}
 
 	s := supervisor.Supervisor{
-		ID:   1,
 		Name: "Christian",
 	}
 
 	w := worker.Worker{
-		ID:   2,
 		Name: "Lorena",
 	}
 
 	d.AddEmployee(&s)
 	d.AddEmployee(&w)
 
-	names := d.GetEmployeeNames()
-	fmt.Printf("Employees: %s\n", names)
+	names := d.GetEmployeeNames(&s)
+	fmt.Printf("SUpervisors: %s\n", names)
+	d.GetEmployee(&s, 0, "")
 
-	id := d.GetEmployee(2)
-	fmt.Println(id)
+	names = d.GetEmployeeNames(&w)
+	fmt.Printf("Workers: %s\n", names)
+	d.GetEmployee(&w, 0, "")
 
 	//concetar a la base de datos
-	db := database.ConnectToTestTable()
+	/*db := database.ConnectToTestTable()
 
 	//Crear tabla , accediendo a queries.go
 	//queries.CrearTabla(db)
@@ -51,5 +54,6 @@ func main() {
 	//queries.EliminarSucursal(db, 5)
 
 	queries.ObtenerSucursal2(db)
+	*/
 
 }

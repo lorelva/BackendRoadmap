@@ -43,3 +43,8 @@ func ConnectToTestTable() *sql.DB {
 	//retorno del puntero de sql
 	return db
 }
+
+func ConnectToDepartment() *sql.DB {
+	return nil
+
+}
