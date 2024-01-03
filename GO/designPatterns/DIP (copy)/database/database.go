@@ -26,7 +26,7 @@ func ConnectToTestTable() *sql.DB {
 	db, err := sql.Open("mysql", cfg.FormatDSN())
 	if err != nil {
 		// debemos empezar a saber usar los log de fatal cuando deseamos acabar el programa
-		log.Fatalf("No se puede abrir la base de datos, el error fue %v \n", err)
+		log.Fatalf("No se puede abrir la base de datos, el error fue: %v \n", err)
 	}
 
 	//El ping siempre debe ser usado porque si no se aprecen bugs o errores.
@@ -45,6 +45,23 @@ func ConnectToTestTable() *sql.DB {
 }
 
 func ConnectToDepartment() *sql.DB {
-	return nil
+	cfg := mysql.Config{
+		User:   "lorelva",
+		Passwd: "140218",
+		Addr:   "localhost:3306",
+		DBName: "DEPARTMENT",
+		Net:    "tcp",
+	}
+
+	db, err := sql.Open("mysql", cfg.FormatDSN())
+	if err != nil {
+		log.Fatalf("No se pudo abrir la base de datos, debido a: %v \n", err)
+	}
+
+	err = db.Ping()
+	if err != nil {
+		log.Fatal("No se pudo realizar ping con la base de datos, el eeror fue:", err)
+	}
+	return db
 
 }
