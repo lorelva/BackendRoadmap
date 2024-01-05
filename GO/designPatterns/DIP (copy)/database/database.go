@@ -60,7 +60,7 @@ func ConnectToDepartment() *sql.DB {
 
 	err = db.Ping()
 	if err != nil {
-		log.Fatal("No se pudo realizar ping con la base de datos, el eeror fue:", err)
+		log.Fatal("No se pudo realizar ping con la base de datos, el error fue:", err)
 	}
 	return db
 

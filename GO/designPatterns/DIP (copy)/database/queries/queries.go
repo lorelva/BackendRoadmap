@@ -9,7 +9,6 @@ import (
 //FUnciones DML--> DATA MANUPULATION LANGUAGE == CRUD(Create, Read, Update, Delete)
 
 func CrearTabla(db *sql.DB) {
-
 	//Exec no retorna filas solo ejecuta comandos como: Create, Insert, Update, Delete
 	_, err := db.Exec(`
 	CREATE TABLE SUCURSAL(
@@ -195,4 +194,39 @@ func ObtenerSucursalPorID(db *sql.DB, idSucursal int) {
 		}
 		fmt.Printf("El id es: %d, la direccion es: %s \n", id, direccion.String)
 	}
+}
+
+//QUERIES PARA LA BASE DE DATOS DEPARTMENT
+//WORKER Y SUPERVISOR
+
+func CreateTableWorker(db *sql.DB) {
+	_, err := db.Exec(`
+	CREATE TABLE WORKER(
+		ID INT PRIMARY KEY AUTO_INCREMENT,
+		NAME VARCHAR(100)
+	);
+	`)
+
+	if err != nil {
+		log.Println("No se pudo crear la tabla sucursal, la causa fue: ", err)
+		return
+	}
+
+	log.Println("La tabla worker se creó con éxito")
+}
+
+func CreateTableSupervisor(db *sql.DB) {
+	_, err := db.Exec(`
+	CREATE TABLE SUPERVISOR(
+		ID INT PRIMARY KEY AUTO_INCREMENT,
+		NAME VARCHAR(100)
+	);	
+	`)
+
+	if err != nil {
+		log.Println("No se pudo crear correctamente la tabla supervisor, la causa fue: ", err)
+		return
+	}
+	log.Println("La tabla worker se creó con éxito")
+
 }
