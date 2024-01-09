@@ -18,18 +18,18 @@ func main() {
 	}
 
 	s := supervisor.Supervisor{
-		Name: "Christian",
+		Name: "Chris",
 	}
 
 	w := worker.Worker{
-		Name: "Lorena",
+		Name: "Lore",
 	}
 
 	d.AddEmployee(&s)
 	d.AddEmployee(&w)
 
 	names := d.GetEmployeeNames(&s)
-	fmt.Printf("SUpervisors: %s\n", names)
+	fmt.Printf("Supervisors: %s\n", names)
 	d.GetEmployee(&s, 0, "")
 
 	names = d.GetEmployeeNames(&w)

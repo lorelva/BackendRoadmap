@@ -2,7 +2,6 @@ package worker
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 )
 
@@ -10,8 +9,8 @@ type Worker struct {
 	Name string
 }
 
-func (w *Worker) Add(db *sql.DB, name string) {
-	result, err := db.Exec("INSERT INTO WORKER VALUES (?);", name)
+func (w *Worker) Add(db *sql.DB) {
+	result, err := db.Exec("INSERT INTO WORKER (NAME) VALUES(?);", w.Name)
 
 	if err != nil {
 		log.Println("No se pudo insertar los valores a la tabla Worker, el error fue :", err)
@@ -21,16 +20,16 @@ func (w *Worker) Add(db *sql.DB, name string) {
 	rowsInserted, err := result.RowsAffected()
 	if err != nil {
 		log.Println("No se pudo obtener de los valores de las columnas agregadas", err)
+		return
 	}
 
 	if rowsInserted > 0 {
-		log.Println("Se insertaron correctamente en la tabla worker, los valores son: ", name)
+		log.Println("Se insertaron correctamente en la tabla worker, los valores son: ", w.Name)
 		return
 	} else if rowsInserted == 0 {
 		log.Println("Los datos no se insertaron en la tabla worker")
 		return
 	}
-	fmt.Println("Agregado 1")
 
 }
 
@@ -43,10 +42,11 @@ func (w *Worker) GetByName(db *sql.DB, name string) {
 }
 
 func (w *Worker) GetAllNames(db *sql.DB) []string {
-	//no quitar el return, por el moemnbto conq ue se imprima todos los valores
+	//no quitar el return, por el momento con que se imprima todos los valores
 	var (
-		id   int
-		name string
+		id         int
+		workerName string
+		names      []string
 	)
 
 	rows, err := db.Query("SELECT * FROM WORKER;")
@@ -56,19 +56,25 @@ func (w *Worker) GetAllNames(db *sql.DB) []string {
 	}
 
 	for rows.Next() {
-		err = rows.Scan(&id, &name)
+		err = rows.Scan(&id, &workerName)
 		if err != nil {
 			log.Println("No se pudo obtener la información, debido a: ", err)
 			return nil
 		}
-		fmt.Printf("El id es: %d, el nombre  es: %s \n", id, name)
+		//fmt.Printf("El id es: %d, el nombre  es: %s \n", id, workerName)
+		names = append(names, workerName)
 	}
-	return nil
+
+	if err := rows.Err(); err != nil {
+		log.Println("Error al recorrer las filas:", err)
+		return nil
+	}
+	return names
 
 }
 
-func (w *Worker) UpdateByID(db *sql.DB, id int, name string) {
-	result, err := db.Exec("UPDATE WORKER SET NAME = ? WHERE ID = ?", name, id)
+func (w *Worker) UpdateByID(db *sql.DB, id int) {
+	result, err := db.Exec("UPDATE WORKER SET NAME = ? WHERE ID = ?", w.Name, id)
 	if err != nil {
 		log.Println("No se pudo realizar la actualización de datos en la tabla worker, el error fue: ", err)
 		return
@@ -81,7 +87,7 @@ func (w *Worker) UpdateByID(db *sql.DB, id int, name string) {
 	}
 
 	if rowsUpdated > 0 {
-		log.Println("Se actualizó con exito en la tabla worker, los valores son: ", id)
+		log.Println("Se actualizó con exito en la tabla worker, los valores son: ", w.Name)
 		return
 	} else if rowsUpdated == 0 {
 		log.Println("No se pudo actualizar datos en la tabla worker")

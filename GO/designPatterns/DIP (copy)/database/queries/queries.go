@@ -43,7 +43,7 @@ func InsertarSucursal(db *sql.DB, direccion string, id int) {
 
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
-		log.Println("NO se pudo obtener los valores de columnas agregadas: ", err)
+		log.Println("NO se pudo obtener los valores de las columnas agregadas: ", err)
 		return
 	}
 
@@ -198,7 +198,7 @@ func ObtenerSucursalPorID(db *sql.DB, idSucursal int) {
 
 //QUERIES PARA LA BASE DE DATOS DEPARTMENT
 //WORKER Y SUPERVISOR
-
+/*
 func CreateTableWorker(db *sql.DB) {
 	_, err := db.Exec(`
 	CREATE TABLE WORKER(
@@ -220,7 +220,7 @@ func CreateTableSupervisor(db *sql.DB) {
 	CREATE TABLE SUPERVISOR(
 		ID INT PRIMARY KEY AUTO_INCREMENT,
 		NAME VARCHAR(100)
-	);	
+	);
 	`)
 
 	if err != nil {
@@ -230,3 +230,4 @@ func CreateTableSupervisor(db *sql.DB) {
 	log.Println("La tabla worker se creó con éxito")
 
 }
+*/

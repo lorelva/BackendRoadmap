@@ -2,7 +2,6 @@ package supervisor
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 )
 
@@ -10,8 +9,8 @@ type Supervisor struct {
 	Name string
 }
 
-func (s *Supervisor) Add(db *sql.DB, name string) {
-	result, err := db.Exec("INSERT INTO SUPERVISOR VALUES (?);", name)
+func (s *Supervisor) Add(db *sql.DB) {
+	result, err := db.Exec("INSERT INTO SUPERVISOR(NAME) VALUES(?);", s.Name)
 
 	if err != nil {
 		log.Println("No se pudo insertar los valores a la tabla Supervisor, el error fue :", err)
@@ -24,14 +23,12 @@ func (s *Supervisor) Add(db *sql.DB, name string) {
 	}
 
 	if rowsInserted > 0 {
-		log.Println("Se insertaron correctamente en la tabla supervisor, los valores son: ", name)
+		log.Println("Se insertaron correctamente en la tabla supervisor, los valores son: ", s.Name)
 		return
 	} else if rowsInserted == 0 {
 		log.Println("Los datos no se insertaron en la tabla supervisor")
 		return
 	}
-	fmt.Println("Agregado 1")
-
 }
 
 func (s *Supervisor) GetByID(db *sql.DB, id int) {
@@ -44,30 +41,37 @@ func (s *Supervisor) GetByName(db *sql.DB, name string) {
 
 func (s *Supervisor) GetAllNames(db *sql.DB) []string {
 	var (
-		id   int
-		name string
+		id             int
+		supervisorName string
+		names          []string
 	)
 
 	rows, err := db.Query("SELECT * FROM SUPERVISOR;")
 	if err != nil {
 		log.Println("No se pudo mostrar los datos de la tabla supervisor: ", err)
-		return
+		return nil
 	}
 
 	for rows.Next() {
-		err = rows.Scan(&id, &name)
+		err = rows.Scan(&id, &supervisorName)
 		if err != nil {
 			log.Println("No se pudo obtener la información, debido a: ", err)
-			return
+			return nil
 		}
-		fmt.Printf("El id es: %d, el nombre  es: %s \n", id, name)
+		//fmt.Printf("El id es: %d, el nombre  es: %s \n", id, supervisorName)
+		names = append(names, supervisorName)
 	}
-	return nil
+
+	if err := rows.Err(); err != nil {
+		log.Println("Error al recorrer las filas:", err)
+		return nil
+	}
+	return names
 
 }
 
-func (s *Supervisor) UpdateByID(db *sql.DB, id int, name string) {
-	result, err := db.Exec("UPDATE SUPERVISOR SET NAME = ? WHERE ID = ?", name, id)
+func (s *Supervisor) UpdateByID(db *sql.DB, id int) {
+	result, err := db.Exec("UPDATE SUPERVISOR SET NAME = ? WHERE ID = ?", s.Name, id)
 	if err != nil {
 		log.Println("No se pudo realizar la actualización de datos en la tabla supervisor, el error fue: ", err)
 		return
@@ -80,7 +84,7 @@ func (s *Supervisor) UpdateByID(db *sql.DB, id int, name string) {
 	}
 
 	if rowsUpdated > 0 {
-		log.Println("Se actualizó con exito en la tabla supervisor, los valores son: ", id)
+		log.Println("Se actualizó con exito en la tabla supervisor, los valores son: ", s.Name)
 		return
 	} else if rowsUpdated == 0 {
 		log.Println("No se pudo actualizar datos en la tabla supervisor")
