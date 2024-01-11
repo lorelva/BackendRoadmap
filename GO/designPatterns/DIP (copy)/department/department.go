@@ -19,7 +19,8 @@ func (d *Department) GetEmployeeNames(e employee.Employee) []string {
 	return names
 }
 
-func (d *Department) GetEmployee(e employee.Employee, id int, name string) {
-	e.GetByID(d.DB, id)
+// en este no funciona porque se repitería que lo anterior
+func (d *Department) GetEmployee(e employee.Employee, name string) {
+	//e.GetByID(d.DB, id)
 	e.GetByName(d.DB, name)
 }

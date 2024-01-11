@@ -1,11 +1,8 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/lorelva/designPatterns/DIP/database"
 	"github.com/lorelva/designPatterns/DIP/department"
-	"github.com/lorelva/designPatterns/DIP/department/employee/supervisor"
 	"github.com/lorelva/designPatterns/DIP/department/employee/worker"
 )
 
@@ -17,24 +14,34 @@ func main() {
 		DB: departmentDB,
 	}
 
-	s := supervisor.Supervisor{
-		Name: "Chris",
+	/*s := supervisor.Supervisor{
+		Name: "Reyes",
 	}
+	*/
+
+	//s.UpdateByID(departmentDB, 4)
+	//s.DeleteByID(departmentDB, 6)
 
 	w := worker.Worker{
-		Name: "Lore",
+		Name: "	Maya",
 	}
 
-	d.AddEmployee(&s)
-	d.AddEmployee(&w)
+	//w.UpdateByID(departmentDB, 4)
+	//w.DeleteByID(departmentDB, 1)
 
-	names := d.GetEmployeeNames(&s)
+	//d.AddEmployee(&s)
+	//d.AddEmployee(&w)
+
+	/*names := d.GetEmployeeNames(&s)
 	fmt.Printf("Supervisors: %s\n", names)
-	d.GetEmployee(&s, 0, "")
+	d.GetEmployee(&s, "Carlos")
+	*/
 
-	names = d.GetEmployeeNames(&w)
+	/*names = d.GetEmployeeNames(&w)
 	fmt.Printf("Workers: %s\n", names)
-	d.GetEmployee(&w, 0, "")
+	d.GetEmployee(&w, "C")
+	*/
+	d.GetEmployee(&w, "Lore")
 
 	//concetar a la base de datos
 	/*db := database.ConnectToTestTable()

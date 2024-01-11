@@ -19,7 +19,7 @@ func (w *Worker) Add(db *sql.DB) {
 
 	rowsInserted, err := result.RowsAffected()
 	if err != nil {
-		log.Println("No se pudo obtener de los valores de las columnas agregadas", err)
+		log.Println("No se pudo obtener los valores de las columnas agregadas", err)
 		return
 	}
 
@@ -33,11 +33,27 @@ func (w *Worker) Add(db *sql.DB) {
 
 }
 
-func (w *Worker) GetByID(db *sql.DB, id int) {
+/*func (w *Worker) GetByID(db *sql.DB, id int) {
 
 }
+*/
 
 func (w *Worker) GetByName(db *sql.DB, name string) {
+	var nameWorker string
+
+	rows, err := db.Query("SELECT NAME FROM WORKER WHERE NAME = ?;")
+	if err != nil {
+		log.Println("No se encontró el nombre del empleado solicitado:", err)
+		return
+	}
+
+	for rows.Next() {
+		err = rows.Scan(&nameWorker)
+		if err != nil {
+			log.Println("Error al obtener informacion, debido a :", err)
+		}
+	}
+	log.Printf("Nombre del worker: %s\n", nameWorker)
 
 }
 
@@ -58,16 +74,11 @@ func (w *Worker) GetAllNames(db *sql.DB) []string {
 	for rows.Next() {
 		err = rows.Scan(&id, &workerName)
 		if err != nil {
-			log.Println("No se pudo obtener la información, debido a: ", err)
+			log.Println("Error al obtener informacion, debido a: ", err)
 			return nil
 		}
 		//fmt.Printf("El id es: %d, el nombre  es: %s \n", id, workerName)
 		names = append(names, workerName)
-	}
-
-	if err := rows.Err(); err != nil {
-		log.Println("Error al recorrer las filas:", err)
-		return nil
 	}
 	return names
 

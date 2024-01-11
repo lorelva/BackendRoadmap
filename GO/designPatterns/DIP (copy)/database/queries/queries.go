@@ -169,34 +169,24 @@ func ObtenerSucursal2(db *sql.DB) {
 func ObtenerSucursalPorID(db *sql.DB, idSucursal int) {
 	var (
 		id int
-		//Cuando hay valores nulos en la tabla , se deben usar los tipos de datos
-		//Del paquete database/sql de GO: NullSTring, NUllInt.....
-		direccion sql.NullString
 	)
 
-	rows, err := db.Query("SELECT * FROM SUCURSAL;")
+	rows, err := db.Query("SELECT ID FROM SUCURSAL WHERE ID = ?;")
 	if err != nil {
 		log.Println("No se pudo mostrar los datos de la tabla sucursal: ", err)
 		return
 	}
-
-	//en go no hay do while or while
-	//en este caso se usa un for para recorrer cada valor de la tabla(es como si fuese un while)
 	for rows.Next() {
-		//Siempre se lee de forma ordenda conforme a la tabla
-		//Se debe pasar la direccion de mmemoria de neutsra variable a guardar
-		err = rows.Scan(&id, &direccion)
-		//si error  no es nulo-->tiene algo
-		//si es nil -->no hay nada
+		err = rows.Scan(&id)
 		if err != nil {
 			log.Println("No se pudo obtener la información, debido a: ", err)
 			return
 		}
-		fmt.Printf("El id es: %d, la direccion es: %s \n", id, direccion.String)
+		fmt.Printf("El id es: %d", id)
 	}
 }
 
-//QUERIES PARA LA BASE DE DATOS DEPARTMENT
+//QUERIES PARA LA BASE DE DATOS DEPARTMENT EN CASO DE QUE SE QUIEREN CREAR DESDE CODIGO Y NO EN LA BASE DE DATOS
 //WORKER Y SUPERVISOR
 /*
 func CreateTableWorker(db *sql.DB) {

@@ -31,9 +31,10 @@ func (s *Supervisor) Add(db *sql.DB) {
 	}
 }
 
-func (s *Supervisor) GetByID(db *sql.DB, id int) {
-
+//Sería dificil porque se repiten id porque se tiene 1 para supervisor, 1 para worker, en cambio el nombre no importa, solo que haya repetidos de diferentes tablas
+/*func (s *Supervisor) GetByID(db *sql.DB, id int) {
 }
+*/
 
 func (s *Supervisor) GetByName(db *sql.DB, name string) {
 
@@ -60,11 +61,6 @@ func (s *Supervisor) GetAllNames(db *sql.DB) []string {
 		}
 		//fmt.Printf("El id es: %d, el nombre  es: %s \n", id, supervisorName)
 		names = append(names, supervisorName)
-	}
-
-	if err := rows.Err(); err != nil {
-		log.Println("Error al recorrer las filas:", err)
-		return nil
 	}
 	return names
 
