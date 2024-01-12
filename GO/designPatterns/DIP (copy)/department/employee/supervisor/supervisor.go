@@ -31,13 +31,32 @@ func (s *Supervisor) Add(db *sql.DB) {
 	}
 }
 
-//Sería dificil porque se repiten id porque se tiene 1 para supervisor, 1 para worker, en cambio el nombre no importa, solo que haya repetidos de diferentes tablas
-/*func (s *Supervisor) GetByID(db *sql.DB, id int) {
+func (s *Supervisor) GetByID(db *sql.DB, id int) {
+	var (
+		ID   int
+		Name string
+	)
+
+	err := db.QueryRow("SELECT * FROM WORKER WHERE ID = ?;", id).Scan(&ID, &Name)
+	if err != nil {
+		log.Println("NO se pudo obtener el id del supervisor solicitado", err)
+		return
+	}
+
+	log.Printf("Nombre del supervisor con el id %d es: %s\n", ID, Name)
 }
-*/
 
 func (s *Supervisor) GetByName(db *sql.DB, name string) {
+	var nameSupervisor string
 
+	row := db.QueryRow("SELECT NAME FROM SUPERVISOR WHERE NAME = ?;", name)
+	err := row.Scan(&nameSupervisor)
+	if err != nil {
+		log.Println("No se encontró el nombre solicitado:", err)
+		return
+	}
+
+	log.Printf("Nombre del supervisor %s, fue encontrado", nameSupervisor)
 }
 
 func (s *Supervisor) GetAllNames(db *sql.DB) []string {

@@ -10,7 +10,7 @@ type Worker struct {
 }
 
 func (w *Worker) Add(db *sql.DB) {
-	result, err := db.Exec("INSERT INTO WORKER (NAME) VALUES(?);", w.Name)
+	result, err := db.Exec("INSERT INTO WORKER(NAME) VALUES(?);", w.Name)
 
 	if err != nil {
 		log.Println("No se pudo insertar los valores a la tabla Worker, el error fue :", err)
@@ -33,28 +33,32 @@ func (w *Worker) Add(db *sql.DB) {
 
 }
 
-/*func (w *Worker) GetByID(db *sql.DB, id int) {
+func (w *Worker) GetByID(db *sql.DB, id int) {
+	var (
+		ID   int
+		Name string
+	)
+
+	err := db.QueryRow("SELECT * FROM WORKER WHERE ID = ?;", id).Scan(&ID, &Name)
+	if err != nil {
+		log.Println("NO se pudo obtener el id del worker solicitado", err)
+		return
+	}
+
+	log.Printf("Nombre del worker con el id %d es: %s\n", ID, Name)
 
 }
-*/
 
 func (w *Worker) GetByName(db *sql.DB, name string) {
 	var nameWorker string
 
-	rows, err := db.Query("SELECT NAME FROM WORKER WHERE NAME = ?;")
+	err := db.QueryRow("SELECT NAME FROM WORKER WHERE NAME = ?;", name).Scan(&nameWorker)
 	if err != nil {
-		log.Println("No se encontró el nombre del empleado solicitado:", err)
+		log.Println("NO se encontró el nombre solicitado", err)
 		return
 	}
 
-	for rows.Next() {
-		err = rows.Scan(&nameWorker)
-		if err != nil {
-			log.Println("Error al obtener informacion, debido a :", err)
-		}
-	}
-	log.Printf("Nombre del worker: %s\n", nameWorker)
-
+	log.Printf("Nombre del worker %s, fue encontrado", nameWorker)
 }
 
 func (w *Worker) GetAllNames(db *sql.DB) []string {
@@ -80,8 +84,8 @@ func (w *Worker) GetAllNames(db *sql.DB) []string {
 		//fmt.Printf("El id es: %d, el nombre  es: %s \n", id, workerName)
 		names = append(names, workerName)
 	}
-	return names
 
+	return names
 }
 
 func (w *Worker) UpdateByID(db *sql.DB, id int) {

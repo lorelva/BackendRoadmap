@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/lorelva/designPatterns/DIP/database"
 	"github.com/lorelva/designPatterns/DIP/department"
+	"github.com/lorelva/designPatterns/DIP/department/employee/supervisor"
 	"github.com/lorelva/designPatterns/DIP/department/employee/worker"
 )
 
@@ -14,10 +15,9 @@ func main() {
 		DB: departmentDB,
 	}
 
-	/*s := supervisor.Supervisor{
+	s := supervisor.Supervisor{
 		Name: "Reyes",
 	}
-	*/
 
 	//s.UpdateByID(departmentDB, 4)
 	//s.DeleteByID(departmentDB, 6)
@@ -41,7 +41,8 @@ func main() {
 	fmt.Printf("Workers: %s\n", names)
 	d.GetEmployee(&w, "C")
 	*/
-	d.GetEmployee(&w, "Lore")
+	d.GetEmployee(&w, 4, "Lore")
+	d.GetEmployee(&s, 3, "holi")
 
 	//concetar a la base de datos
 	/*db := database.ConnectToTestTable()
