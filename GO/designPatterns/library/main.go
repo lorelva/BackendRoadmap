@@ -16,10 +16,8 @@ func main() {
 
 	b := book.Book{
 		Title:           "Hola",
-		Author:          "lorena",
+		Author:          "Lorena",
 		PublicationDate: "2000-07-23",
 	}
-
-	b.AddBook(libraryDB)
 
 }
