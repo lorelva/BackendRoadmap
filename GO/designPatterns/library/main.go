@@ -20,4 +20,6 @@ func main() {
 		PublicationDate: "2000-07-23",
 	}
 
+	b.AddBook(libraryDB)
+
 }
