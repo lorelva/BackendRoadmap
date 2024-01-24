@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/lorelva/designPatterns/library/database"
 	librarysystem "github.com/lorelva/designPatterns/library/librarySystem"
 	"github.com/lorelva/designPatterns/library/librarySystem/book"
@@ -10,16 +12,23 @@ func main() {
 
 	libraryDB := database.ConnectToLibrary()
 
-	library := librarysystem.Library{
+	l := librarysystem.Library{
 		DB: libraryDB,
 	}
 
-	b := book.Book{
-		Title:           "Hola",
-		Author:          "Lorena",
-		PublicationDate: "2000-07-23",
+	dataBook := book.Book{
+		Title:           "jiji",
+		Author:          "uiuu",
+		PublicationDate: "2023-03-10",
 	}
 
-	b.AddBook(libraryDB)
+	//l.AddBook(dataBook)
+	fmt.Println(l)
+
+	//dataBook.Add(libraryDB)
+	//dataBook.UpdateByID(libraryDB, 3)
+
+	dataBook.DeleteByID(libraryDB, 4)
+	//dataBook.GetByID(libraryDB, 6)
 
 }

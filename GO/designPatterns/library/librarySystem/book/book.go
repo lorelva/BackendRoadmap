@@ -11,7 +11,7 @@ type Book struct {
 	PublicationDate string
 }
 
-func (b *Book) AddBook(db *sql.DB) {
+func (b *Book) Add(db *sql.DB) {
 	result, err := db.Exec(`
 	INSERT INTO BOOK (TITLE, AUTHOR, PUBLICATION_DATE) VALUES (?, ?, ?);
 	`, b.Title, b.Author, b.PublicationDate)
@@ -27,7 +27,7 @@ func (b *Book) AddBook(db *sql.DB) {
 	}
 
 	if rowsInserted > 0 {
-		log.Println("Data successfully added into the book table, values are: ", b.Title, b.Author, b.PublicationDate)
+		log.Printf("Data successfully added to book table, values are\n Title: %s\n Author: %s\n Publication Date: %s\n", b.Title, b.Author, b.PublicationDate)
 		return
 	} else if rowsInserted == 0 {
 		log.Println("Data unsucessfully added into the book table", err)
@@ -36,7 +36,7 @@ func (b *Book) AddBook(db *sql.DB) {
 
 }
 
-func (b *Book) UpdateBook(db *sql.DB, id int) {
+func (b *Book) UpdateByID(db *sql.DB, id int) {
 	result, err := db.Exec(`
 	UPDATE BOOK SET TITLE = ?, AUTHOR = ?, PUBLICATION_DATE = ? WHERE ID = ?;
 	`, b.Title, b.Author, b.PublicationDate, id)
@@ -61,8 +61,8 @@ func (b *Book) UpdateBook(db *sql.DB, id int) {
 
 }
 
-func (b *Book) DeleteBook(db *sql.DB, id int) {
-	result, err := db.Exec("DELETE FROM BOOK WHERE ID = 1;", id)
+func (b *Book) DeleteByID(db *sql.DB, id int) {
+	result, err := db.Exec("DELETE FROM BOOK WHERE ID = ?;", id)
 	if err != nil {
 		log.Println("Could not delete the id in the 'book' table, the error was: ", err)
 		return
@@ -70,21 +70,21 @@ func (b *Book) DeleteBook(db *sql.DB, id int) {
 
 	rowsDeleted, err := result.RowsAffected()
 	if err != nil {
-		log.Println("Could not delete values from the columns with the requested id: ", err)
+		log.Println("Could not delete values with the requested id: ", err)
 		return
 	}
 
 	if rowsDeleted > 0 {
-		log.Printf("The id %v was successfully deleted from the book table", id)
+		log.Printf("ID %v was successfully deleted from the book table", id)
 		return
 	} else if rowsDeleted == 0 {
-		log.Println("Could not delete the id in the book table.")
+		log.Println("Could not delete the ID in the book table.")
 		return
 	}
 
 }
 
-func (b *Book) GetBook(db *sql.DB, id int) {
+func (b *Book) GetByID(db *sql.DB, id int) {
 	var (
 		ID               int
 		Title            string
