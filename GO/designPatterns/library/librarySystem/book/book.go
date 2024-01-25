@@ -11,7 +11,25 @@ type Book struct {
 	PublicationDate string
 }
 
-func (b *Book) Add(db *sql.DB) {
+func (b *Book) Add(db *sql.DB, name string) {
+	var nameUser, typeUser string
+
+	err := db.QueryRow(`
+	SELECT NAME, UT.TYPE FROM USER
+    INNER JOIN USER_TYPE UT on USER.ID_TYPE = UT.ID
+    WHERE NAME = ?;
+	`, name).Scan(&nameUser, &typeUser)
+
+	if err != nil {
+		log.Println("No se pudo obtener la informacion del usuario", err)
+		return
+	}
+
+	if typeUser != "BIBLIOTECARIO" {
+		log.Printf("EL usuario %s no puede agregar el libro, es de tipo :%s ", nameUser, typeUser)
+		return
+	}
+
 	result, err := db.Exec(`
 	INSERT INTO BOOK (TITLE, AUTHOR, PUBLICATION_DATE) VALUES (?, ?, ?);
 	`, b.Title, b.Author, b.PublicationDate)
@@ -24,6 +42,7 @@ func (b *Book) Add(db *sql.DB) {
 	rowsInserted, err := result.RowsAffected()
 	if err != nil {
 		log.Println("Unable to obtained values from the aggregated columns", err)
+		return
 	}
 
 	if rowsInserted > 0 {
@@ -35,6 +54,8 @@ func (b *Book) Add(db *sql.DB) {
 	}
 
 }
+
+//hacer validaciones de que solo el encargado de la libreria puede actualizar, borrar libros
 
 func (b *Book) UpdateByID(db *sql.DB, id int) {
 	result, err := db.Exec(`
