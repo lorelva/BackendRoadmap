@@ -21,6 +21,7 @@ func main() {
 	}
 
 	library.Add(&dataBook, "Christian")
+	library.Add(&dataBook, "Hola")
 
 	//dataBook.Add(libraryDB)
 	//dataBook.UpdateByID(libraryDB, 3)

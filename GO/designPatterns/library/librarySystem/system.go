@@ -2,7 +2,7 @@ package librarysystem
 
 import "database/sql"
 
-type Management interface {
+type System interface {
 	Add(db *sql.DB, name string)
 	UpdateByID(db *sql.DB, id int)
 	DeleteByID(db *sql.DB, id int)

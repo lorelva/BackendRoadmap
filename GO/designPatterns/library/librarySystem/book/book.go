@@ -21,12 +21,12 @@ func (b *Book) Add(db *sql.DB, name string) {
 	`, name).Scan(&nameUser, &typeUser)
 
 	if err != nil {
-		log.Println("No se pudo obtener la informacion del usuario", err)
+		log.Println("Unvailable to obtained user information:", err)
 		return
 	}
 
 	if typeUser != "BIBLIOTECARIO" {
-		log.Printf("EL usuario %s no puede agregar el libro, es de tipo :%s ", nameUser, typeUser)
+		log.Printf("User %s cannot add book,  because it's an %s user", nameUser, typeUser)
 		return
 	}
 
@@ -55,9 +55,26 @@ func (b *Book) Add(db *sql.DB, name string) {
 
 }
 
-//hacer validaciones de que solo el encargado de la libreria puede actualizar, borrar libros
+func (b *Book) UpdateByID(db *sql.DB, id int, name string) {
 
-func (b *Book) UpdateByID(db *sql.DB, id int) {
+	var nameUser, typeUser string
+
+	err := db.QueryRow(`
+	SELECT NAME, UT.TYPE FROM USER
+    INNER JOIN USER_TYPE UT on USER.ID_TYPE = UT.ID
+    WHERE NAME = ?;
+	`, name).Scan(&nameUser, &typeUser)
+
+	if err != nil {
+		log.Println("Unvailable to obtained user information:", err)
+		return
+	}
+
+	if typeUser != "BIBLIOTECARIO" {
+		log.Printf("User %s cannot add book,  because it's an %s user", nameUser, typeUser)
+		return
+	}
+
 	result, err := db.Exec(`
 	UPDATE BOOK SET TITLE = ?, AUTHOR = ?, PUBLICATION_DATE = ? WHERE ID = ?;
 	`, b.Title, b.Author, b.PublicationDate, id)
@@ -82,7 +99,25 @@ func (b *Book) UpdateByID(db *sql.DB, id int) {
 
 }
 
-func (b *Book) DeleteByID(db *sql.DB, id int) {
+func (b *Book) DeleteByID(db *sql.DB, id int, name string) {
+	var nameUser, typeUser string
+
+	err := db.QueryRow(`
+	SELECT NAME, UT.TYPE FROM USER
+    INNER JOIN USER_TYPE UT on USER.ID_TYPE = UT.ID
+    WHERE NAME = ?;
+	`, name).Scan(&nameUser, &typeUser)
+
+	if err != nil {
+		log.Println("Unvailable to obtained user information:", err)
+		return
+	}
+
+	if typeUser != "BIBLIOTECARIO" {
+		log.Printf("User %s cannot add book,  because it's an %s user", nameUser, typeUser)
+		return
+	}
+
 	result, err := db.Exec("DELETE FROM BOOK WHERE ID = ?;", id)
 	if err != nil {
 		log.Println("Could not delete the id in the 'book' table, the error was: ", err)
