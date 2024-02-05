@@ -71,7 +71,7 @@ func (b *Book) UpdateByID(db *sql.DB, id int, name string) {
 	}
 
 	if typeUser != "BIBLIOTECARIO" {
-		log.Printf("User %s cannot add book,  because it's an %s user", nameUser, typeUser)
+		log.Printf("User %s cannot update book,  because it's an %s user", nameUser, typeUser)
 		return
 	}
 
@@ -85,7 +85,7 @@ func (b *Book) UpdateByID(db *sql.DB, id int, name string) {
 
 	rowsUpdated, err := result.RowsAffected()
 	if err != nil {
-		log.Println("NO se pudo actualizar valores de las columnas modificadas: ", err)
+		log.Println("Cannot update values on the corresponding columns ", err)
 		return
 	}
 
@@ -114,7 +114,7 @@ func (b *Book) DeleteByID(db *sql.DB, id int, name string) {
 	}
 
 	if typeUser != "BIBLIOTECARIO" {
-		log.Printf("User %s cannot add book,  because it's an %s user", nameUser, typeUser)
+		log.Printf("User %s cannot delete book,  because it's an %s user", nameUser, typeUser)
 		return
 	}
 
