@@ -71,7 +71,7 @@ func (b *Book) UpdateByID(db *sql.DB, id int, name string) {
 	}
 
 	if typeUser != "BIBLIOTECARIO" {
-		log.Printf("User %s cannot update book,  because it's an %s user", nameUser, typeUser)
+		log.Printf("Access dennied to %s , because is type %s", nameUser, typeUser)
 		return
 	}
 
@@ -85,7 +85,7 @@ func (b *Book) UpdateByID(db *sql.DB, id int, name string) {
 
 	rowsUpdated, err := result.RowsAffected()
 	if err != nil {
-		log.Println("Cannot update values on the corresponding columns ", err)
+		log.Println("Cannot update values on the corresponding columns", err)
 		return
 	}
 

@@ -6,17 +6,17 @@ import (
 )
 
 type User struct {
-	Name      string
-	Last_Name string
-	Gender    string
-	ID_Type   int
+	Name     string
+	LastName string
+	Gender   string
+	IDType   int
 }
 
 func (u *User) Add(db *sql.DB) {
 	result, err := db.Exec(`
 	INSERT INTO USER (NAME, LAST_NAME, GENDER, ID_TYPE)
     VALUES (?, ?, ?, ?);
-	`, u.Name, u.Last_Name, u.Gender, u.ID_Type)
+	`, u.Name, u.LastName, u.Gender, u.IDType)
 
 	if err != nil {
 		log.Println("Unable to insert into the user table, the error is: ", err)
@@ -32,7 +32,7 @@ func (u *User) Add(db *sql.DB) {
 	if rowsInserted > 0 {
 		log.Printf(
 			"Data successfully added to user table, values are\n Name: %s\n Last Name: %s\n Gender: %s\n, ID Type: %d\n",
-			u.Name, u.Last_Name, u.Gender, u.ID_Type)
+			u.Name, u.LastName, u.Gender, u.IDType)
 		return
 	} else if rowsInserted == 0 {
 		log.Println("Data unsucessfully added into  user table", err)
@@ -43,7 +43,7 @@ func (u *User) Add(db *sql.DB) {
 func (u *User) UpdateByID(db *sql.DB, id int) {
 	result, err := db.Exec(`
 	UPDATE USER SET NAME= ?, LAST_NAME = ?, GENDER= ?, ID_TYPE = ? WHERE ID= ?;
-	`, u.Name, u.Last_Name, u.Gender, u.ID_Type)
+	`, u.Name, u.LastName, u.Gender, u.IDType, id)
 
 	if err != nil {
 		log.Println("Data update could not be on user table, the error was:", err)
@@ -57,7 +57,7 @@ func (u *User) UpdateByID(db *sql.DB, id int) {
 	}
 
 	if rowsUpdated > 0 {
-		log.Println("User table was successfully updated , the values are:", u.Name, u.Last_Name, u.Gender, u.ID_Type)
+		log.Println("User table was successfully updated , the values are:", u.Name, u.LastName, u.Gender, u.IDType)
 		return
 	} else if rowsUpdated == 0 {
 		log.Println("Data could not be updated in the book table")
@@ -66,7 +66,7 @@ func (u *User) UpdateByID(db *sql.DB, id int) {
 }
 
 func (u *User) DeleteByID(db *sql.DB, id int) {
-	result, err := db.Exec("DELETE FROM USER WHERE ID = ?;")
+	result, err := db.Exec("DELETE FROM USER WHERE ID = ?;", id)
 	if err != nil {
 		log.Println("Could not delete the id on the user table, the error was: ", err)
 		return
@@ -90,18 +90,18 @@ func (u *User) DeleteByID(db *sql.DB, id int) {
 
 func (u *User) GetByID(db *sql.DB, id int) {
 	var (
-		ID        int
-		Name      string
-		Last_Name string
-		Gender    string
-		Id_type   int
+		ID       int
+		Name     string
+		LastName string
+		Gender   string
+		Id_type  int
 	)
 
-	err := db.QueryRow("SELECT * FROM USER WHERE ID = ?;", id).Scan(&ID, &Name, &Last_Name, &Gender, &Id_type)
+	err := db.QueryRow("SELECT * FROM USER WHERE ID = ?;", id).Scan(&ID, &Name, &LastName, &Gender, &Id_type)
 	if err != nil {
-		log.Println("Could not retrieve information with the requested ID", err)
+		log.Println("Information with the requested ID,doesn't exists", err)
 		return
 	}
-	log.Printf("Data with ID %d are: %s  %s  %s %d\n", ID, Name, Last_Name, Gender, Id_type)
+	log.Printf("Data with ID %d are: %s  %s  %s %d\n", ID, Name, LastName, Gender, Id_type)
 
 }
