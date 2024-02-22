@@ -40,17 +40,17 @@ func main() {
 	//dataBook.GetByID(libraryDB, 6)
 
 	user := typeuser.User{
-		Name:     "Becky",
-		LastName: "hayak",
-		Gender:   "Femenino",
+		Name:     "Vader",
+		LastName: "Garces",
+		Gender:   "Masculino",
 		IDType:   1,
 	}
 
-	//user.Add(libraryDB)
-	//user.UpdateByID(libraryDB, 3)
-	user.GetByID(libraryDB, 4)
-	//user.DeleteByID(libraryDB, 3)
+	user.Add(libraryDB, "Hola")
+	//user.UpdateByID(libraryDB, 3,"Lorena")
+	//user.GetByID(libraryDB, 4)
+	//user.DeleteByID(libraryDB, 3, "Lorena")
 
-	loan.RequestLoan()
+	loan.RequestLoan(libraryDB, 2, 3)
 
 }

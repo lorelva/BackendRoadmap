@@ -12,7 +12,25 @@ type User struct {
 	IDType   int
 }
 
-func (u *User) Add(db *sql.DB) {
+func (u *User) Add(db *sql.DB, name string) {
+	var nameUser, typeUser string
+
+	err := db.QueryRow(`
+	SELECT NAME, UT.TYPE FROM USER
+    INNER JOIN USER_TYPE UT on USER.ID_TYPE = UT.ID
+    WHERE NAME = ?;
+	`, name).Scan(&nameUser, &typeUser)
+
+	if err != nil {
+		log.Println("Unvailable to obtained user information:", err)
+		return
+	}
+
+	if typeUser != "BIBLIOTECARIO" {
+		log.Printf("User %s cannot add book,  because it's an %s user", nameUser, typeUser)
+		return
+	}
+
 	result, err := db.Exec(`
 	INSERT INTO USER (NAME, LAST_NAME, GENDER, ID_TYPE)
     VALUES (?, ?, ?, ?);
@@ -40,7 +58,25 @@ func (u *User) Add(db *sql.DB) {
 	}
 }
 
-func (u *User) UpdateByID(db *sql.DB, id int) {
+func (u *User) UpdateByID(db *sql.DB, id int, name string) {
+	var nameUser, typeUser string
+
+	err := db.QueryRow(`
+	SELECT NAME, UT.TYPE FROM USER
+    INNER JOIN USER_TYPE UT on USER.ID_TYPE = UT.ID
+    WHERE NAME = ?;
+	`, name).Scan(&nameUser, &typeUser)
+
+	if err != nil {
+		log.Println("Unvailable to obtained user information:", err)
+		return
+	}
+
+	if typeUser != "BIBLIOTECARIO" {
+		log.Printf("User %s cannot add book,  because it's an %s user", nameUser, typeUser)
+		return
+	}
+
 	result, err := db.Exec(`
 	UPDATE USER SET NAME= ?, LAST_NAME = ?, GENDER= ?, ID_TYPE = ? WHERE ID= ?;
 	`, u.Name, u.LastName, u.Gender, u.IDType, id)
@@ -65,7 +101,25 @@ func (u *User) UpdateByID(db *sql.DB, id int) {
 	}
 }
 
-func (u *User) DeleteByID(db *sql.DB, id int) {
+func (u *User) DeleteByID(db *sql.DB, id int, name string) {
+	var nameUser, typeUser string
+
+	err := db.QueryRow(`
+	SELECT NAME, UT.TYPE FROM USER
+    INNER JOIN USER_TYPE UT on USER.ID_TYPE = UT.ID
+    WHERE NAME = ?;
+	`, name).Scan(&nameUser, &typeUser)
+
+	if err != nil {
+		log.Println("Unvailable to obtained user information:", err)
+		return
+	}
+
+	if typeUser != "BIBLIOTECARIO" {
+		log.Printf("User %s cannot add book,  because it's an %s user", nameUser, typeUser)
+		return
+	}
+
 	result, err := db.Exec("DELETE FROM USER WHERE ID = ?;", id)
 	if err != nil {
 		log.Println("Could not delete the id on the user table, the error was: ", err)
