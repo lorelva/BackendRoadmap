@@ -9,16 +9,22 @@ import (
 func RequestLoan(db *sql.DB, idBook int, idUser int) {
 	//FORMATO DE LA FECHA: Buscar YYYY-MM-DD HH:MM:SS
 	//Crear fechas de loan date y due date con el time.now
-	loanDate := time.Now().Format("2006-01-02 15:04:05")
-	dueDate := time.Now().Format("2006-01-02 15:04:05")
+
+	/*loanDate := time.Now().
+		AddDate(0, 0, 10)
+	dueDate := time.Date(
+		loanDate.Year(), loanDate.Month(), loanDate.Day(), 12, 0, 0, 0, loanDate.Location()).
+		Format("2006-01-02 15:04:05")
+	*/
+
+	loanDate := time.Now()
 	endDate := loanDate.AddDate(0, 0, 10)
+	endDateHour := time.Date(endDate.Year(), endDate.Month(), endDate.Day(), 12, 0, 0, 0, endDate.Location())
+	dueDate := endDateHour.Format("2006-01-02 15:04:05")
 
-}
-
-func Add(db *sql.DB) {
 	result, err := db.Exec(`
 	INSERT INTO BOOK_LOAN (ID_BOOK, ID_USER, LOAN_DATE, DUE_DATE) VALUES (?, ?, ?, ?);	
-	`)
+	`, idBook, idUser, loanDate.Format("2006-01-02 15:04:05"), dueDate)
 
 	if err != nil {
 		log.Println("Unable to insert into the LOAN table, the error is: ", err)
@@ -32,7 +38,7 @@ func Add(db *sql.DB) {
 	}
 
 	if rowsInserted > 0 {
-		log.Printf("Data successfully added to loan table, values are\n ID Book: %d\n ID User: %d\n Loan Date: %s\n Due Date: %s\n")
+		log.Printf("Data successfully added to loan table, values are\n ID Book: %d\n ID User: %d\n Loan Date: %s\n Due Date: %s\n", idBook, idUser, loanDate, dueDate)
 		return
 	} else if rowsInserted == 0 {
 		log.Println("Data unsucessfully added into the loan table", err)
@@ -41,10 +47,10 @@ func Add(db *sql.DB) {
 
 }
 
-func UpdateByID(db *sql.DB, id int) {
+func UpdateByID(db *sql.DB, idBook int, idUser int, loanDate string, dueDate string, idLoan int) {
 	result, err := db.Exec(`
 	UPDATE BOOK_LOAN SET  ID_BOOK = ? , ID_USER = ?, LOAN_DATE = ?, DUE_DATE = ? WHERE ID = ?;
-	`)
+	`, idBook, idUser, loanDate, dueDate, idLoan)
 	if err != nil {
 		log.Println("Data update could not be performed on the loan table, the error was:", err)
 		return
@@ -57,7 +63,7 @@ func UpdateByID(db *sql.DB, id int) {
 	}
 
 	if rowsUpdated > 0 {
-		log.Println("Successfully updated in the loan table, the values are:")
+		log.Println("Successfully updated in the loan table, the values are:", idBook, idUser, loanDate, dueDate, idLoan)
 		return
 	} else if rowsUpdated == 0 {
 		log.Println("Data could not be updated in the loan table")

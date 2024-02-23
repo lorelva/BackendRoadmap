@@ -31,7 +31,7 @@ func main() {
 		}, 11, "Lorena")
 	*/
 	library.GetByID(&dataBook, 11)
-	library.DeleteByID(&dataBook, 11, "Lorena")
+	//library.DeleteByID(&dataBook, 11, "Lorena")
 	library.GetByID(&dataBook, 11)
 
 	//dataBook.Add(libraryDB, "Lorena")
@@ -51,6 +51,11 @@ func main() {
 	//user.GetByID(libraryDB, 4)
 	//user.DeleteByID(libraryDB, 3, "Lorena")
 
-	loan.RequestLoan(libraryDB, 2, 3)
+	loan.RequestLoan(libraryDB, 5, 1)
+
+	loan.UpdateByID(libraryDB)
+	loan.UpdateByID(libraryDB)
+	loan.DeleteByID(libraryDB, 3)
+	loan.GetByID(libraryDB, 2)
 
 }
