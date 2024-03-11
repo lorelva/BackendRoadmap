@@ -1,11 +1,18 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"strconv"
 )
+
+type requestJson struct {
+	Primero int `json:"primero,omitempty"`
+	Segundo int `json:"segundo,omitempty"`
+}
 
 func main() {
 	//Creación del http Handler por defecto, también hay por custom
@@ -52,9 +59,35 @@ func main() {
 		}
 
 		//Unión/Concatenación de la suma de los dos números ya convertidos de tipo string a int
-		saludo := fmt.Sprintf("La suma es: %d", numConverted+numConverted2)
-		writer.Write([]byte(saludo))
+		result := fmt.Sprintf("La suma es: %d", numConverted+numConverted2)
+		writer.Write([]byte(result))
 		writer.WriteHeader(200)
+
+	})
+
+	http.HandleFunc("/resta", func(writer http.ResponseWriter, request *http.Request) {
+		if request.Method != "POST" {
+			writer.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		resta := requestJson{}
+
+		body, err := io.ReadAll(request.Body)
+		if err != nil {
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		err = json.Unmarshal(body, &resta)
+		if err != nil {
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		result := resta.Primero - resta.Segundo
+		send := fmt.Sprintf("La resta es %d:", result)
+		writer.Write([]byte(send))
+		writer.WriteHeader(http.StatusAccepted)
 
 	})
 
