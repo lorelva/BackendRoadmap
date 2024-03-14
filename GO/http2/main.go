@@ -14,6 +14,11 @@ type requestJson struct {
 	Segundo int `json:"segundo,omitempty"`
 }
 
+type responseJson struct {
+	Message string `json:"message,omitempty"`
+	Status  int    `json:"status,omitempty"`
+}
+
 func main() {
 	//Creación del http Handler por defecto, también hay por custom
 	http.HandleFunc("/saludo", func(writer http.ResponseWriter, request *http.Request) {
@@ -78,17 +83,42 @@ func main() {
 			writer.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+		defer request.Body.Close()
+
 		err = json.Unmarshal(body, &resta)
 		if err != nil {
+			resJson, err := json.Marshal(responseJson{
+				Message: fmt.Sprintf("Hubo un error en Unmarshal, el error es %v", err),
+				Status:  http.StatusInternalServerError,
+			})
+			if err != nil {
+				writer.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
+			writer.Header().Set("Content-Type", "application/json")
+			writer.Write(resJson)
 			writer.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
 		result := resta.Primero - resta.Segundo
-		send := fmt.Sprintf("La resta es %d:", result)
-		writer.Write([]byte(send))
-		writer.WriteHeader(http.StatusAccepted)
+		send := fmt.Sprintf("La resta es: %d", result)
 
+		res := responseJson{
+			Message: send,
+			Status:  http.StatusOK,
+		}
+
+		resJson, err := json.Marshal(res)
+		if err != nil {
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		writer.Header().Set("Content-Type", "application/json")
+		writer.Write(resJson)
+		writer.WriteHeader(http.StatusAccepted)
 	})
 
 	log.Fatal(http.ListenAndServe(":3030", nil))
