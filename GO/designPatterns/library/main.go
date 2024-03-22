@@ -53,9 +53,8 @@ func main() {
 
 	loan.RequestLoan(libraryDB, 5, 1)
 
-	loan.UpdateByID(libraryDB)
-	loan.UpdateByID(libraryDB)
-	loan.DeleteByID(libraryDB, 3)
+	//loan.UpdateByID(libraryDB)
+	//loan.DeleteByID(libraryDB, 3)
 	loan.GetByID(libraryDB, 2)
 
 }
