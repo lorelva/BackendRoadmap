@@ -82,6 +82,7 @@ func main() {
 
 	//STATIC CONTENT --> Servir archivos, en toda una pagina entera
 	//Use pkg static where are located static archives like: .pdf, .txt, .html, images: .png, .jpg
+    // ON BROWSER : http://192.168.1.74:8080/static/hola.txt and http://192.168.1.74:8080/static/index.html
 	e.Static("/static", "static")
 
 	//http server started on [::]:8080 --> Allows any IP connections on the port that was selected
