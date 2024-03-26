@@ -19,6 +19,15 @@ type jsonPerson struct {
 	Children bool   `json:"children,omitempty"`
 }
 
+type person2 struct {
+	Page     int `json:"page,omitempty"`
+	PageSize int `json:"page_size,omitempty"`
+}
+
+type numbers struct {
+	Number []int `json:"number,omitempty"`
+}
+
 func main() {
 	//BASIC SYNTAX LIKE HELLO WORLD!
 	//Create the server with echo.New()
@@ -85,6 +94,8 @@ func main() {
 	//Use pkg static where are located static archives like: .pdf, .txt, .html, images: .png, .jpg
 	e.Static("/static", "static")
 
+	e.GET("/number", Persona2)
+
 	//http server started on [::]:8080 --> Allows any IP connections on the port that was selected
 	//When there's no IP address, put the specific port :8080 == obviar el puerto en este caso :8080
 	//CREATE AN INSTANCE OF LOGGER.FATAL
@@ -110,4 +121,26 @@ func Persona(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, response)
 
+}
+
+func Persona2(c echo.Context) error {
+	jsonRequest := person2{}
+	err := c.Bind(&jsonRequest)
+	if err != nil {
+		return err
+	}
+
+	response := []numbers{}
+
+	for i := 0; i < jsonRequest.Page; i++ {
+		temproralNumber := []int{}
+		for i := 0; i < jsonRequest.PageSize; i++ {
+			temproralNumber = append(temproralNumber, i)
+		}
+		response = append(response, numbers{
+			Number: temproralNumber,
+		})
+	}
+
+	return c.JSON(http.StatusOK, response)
 }
