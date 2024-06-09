@@ -1,0 +1,3 @@
+	db, mock, err := sqlmock.New()
+	assert.NoError(t, err)
+	defer db.Close()
