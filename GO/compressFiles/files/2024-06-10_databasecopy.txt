@@ -1,0 +1,10 @@
+CONTROLLER:
+func (a *ActivityManagementController) Delete(c echo.Context) error {
+	userIDString := c.QueryParam("user_id")
+	userID, err := strconv.Atoi(userIDString)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, ControllerMessageResponse{
+			StatusCode: http.StatusBadRequest,
+			Message:    fmt.Sprintf("invalid input data: %s", err),
+		})
+	}

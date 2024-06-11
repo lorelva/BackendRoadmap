@@ -1,0 +1,4 @@
+type StudentSituationReport struct {
+	CurrentSituation string `json:"current_situation,omitempty"`
+	Quantity         int    `json:"quantity,omitempty"`
+}
