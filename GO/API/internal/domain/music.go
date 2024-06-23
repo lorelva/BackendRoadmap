@@ -8,11 +8,3 @@ type Music struct {
 	Album        string `json:"album,omitempty"`
 	MusicalGenre string `json:"musical_genre,omitempty"`
 }
-
-type MusicResponse struct {
-	ID           int    `json:"id,omitempty"`
-	SongTitle    string `json:"song_title,omitempty"`
-	Artist       string `json:"artist,omitempty"`
-	Album        string `json:"album,omitempty"`
-	MusicalGenre string `json:"musical_genre,omitempty"`
-}
