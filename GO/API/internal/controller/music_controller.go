@@ -46,16 +46,16 @@ func (m *MusicController) CreateMusic(c echo.Context) error {
 	return c.JSON(http.StatusCreated, ControllerMessageResponse{
 		StatusCode: http.StatusCreated,
 		Message:    "Music added successfully",
-		Data:       music,
 	})
 }
 
 func (m *MusicController) UpdateMusic(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
+	musicID := c.QueryParam("id")
+	musicIDConverted, err := strconv.Atoi(musicID)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, ControllerMessageResponse{
 			StatusCode: http.StatusBadRequest,
-			Message:    "Invalid music ID",
+			Message:    fmt.Sprintf("Invalid music ID requested: %v", err),
 		})
 	}
 
@@ -67,7 +67,7 @@ func (m *MusicController) UpdateMusic(c echo.Context) error {
 		})
 	}
 
-	if err := m.repo.Update(id, &music); err != nil {
+	if err := m.repo.Update(musicIDConverted, &music); err != nil {
 		return c.JSON(http.StatusInternalServerError, ControllerMessageResponse{
 			StatusCode: http.StatusInternalServerError,
 			Message:    fmt.Sprintf("Failed to update music: %v", err),
@@ -76,21 +76,21 @@ func (m *MusicController) UpdateMusic(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, ControllerMessageResponse{
 		StatusCode: http.StatusOK,
-		Message:    "Music with the ID requested updated successfully",
-		Data:       music,
+		Message:    "Music with the requested ID updated successfully",
 	})
 }
 
 func (m *MusicController) DeleteMusic(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
+	musicID := c.QueryParam("id")
+	musicIDConverted, err := strconv.Atoi(musicID)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, ControllerMessageResponse{
 			StatusCode: http.StatusBadRequest,
-			Message:    "Invalid music ID",
+			Message:    fmt.Sprintf("Invalid music ID requested: %v", err),
 		})
 	}
 
-	if err := m.repo.Delete(id); err != nil {
+	if err := m.repo.Delete(musicIDConverted); err != nil {
 		return c.JSON(http.StatusInternalServerError, ControllerMessageResponse{
 			StatusCode: http.StatusInternalServerError,
 			Message:    fmt.Sprintf("Failed to delete music: %v", err),
@@ -104,29 +104,18 @@ func (m *MusicController) DeleteMusic(c echo.Context) error {
 }
 
 func (m *MusicController) GetAllMusic(c echo.Context) error {
-	idParam := c.QueryParam("id")
-	var id int
-	var err error
-	if idParam != "" {
-		id, err = strconv.Atoi(idParam)
-		if err != nil {
-			return c.JSON(http.StatusBadRequest, ControllerMessageResponse{
-				StatusCode: http.StatusBadRequest,
-				Message:    "Invalid music ID",
-			})
-		}
-	}
-
-	music, err := m.repo.GetAllOrByID(id)
+	allMusic, err := m.repo.GetAll()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, ControllerMessageResponse{
 			StatusCode: http.StatusInternalServerError,
-			Message:    fmt.Sprintf("Failed to retrieve music: %v", err),
+			Message:    fmt.Sprintf("Failed to retrieve all music: %v", err),
 		})
 	}
+
+	// No es necesario transformar los datos si ya tienen todos los campos
 	return c.JSON(http.StatusOK, ControllerMessageResponse{
 		StatusCode: http.StatusOK,
-		Message:    "Successfully retrieved music",
-		Data:       music,
+		Message:    "Successfully retrieved all music",
+		Data:       allMusic, // Devolver directamente todos los objetos Music
 	})
 }

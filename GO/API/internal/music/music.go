@@ -9,5 +9,4 @@ type MusicRepository interface {
 	Update(id int, musicUpdate *domain.Music) error
 	Delete(id int) error
 	GetAll() ([]domain.Music, error)
-	GetByID(id int) (*domain.Music, error)
 }
