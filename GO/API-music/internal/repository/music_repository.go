@@ -1,6 +1,10 @@
 package repository
 
-import "github.com/lorelva/BackendRoadmap/GO/API-music/internal/domain"
+import (
+	"errors"
+
+	"github.com/lorelva/BackendRoadmap/GO/API-music/internal/domain"
+)
 
 type MusicRepository struct {
 	Music []domain.Music
@@ -15,21 +19,45 @@ func MusicRepositoryService() *MusicRepository {
 }
 
 func (m *MusicRepository) Create(music *domain.Music) error {
+	if music == nil {
+		return errors.New("music cannot be nil")
+	}
+
+	addMusic := *music
+	addMusic.ID = m.NewID
 	m.NewID++
-	music.ID = m.NewID
-	m.Music = append(m.Music, *music)
+
+	m.Music = append(m.Music, addMusic)
 	return nil
 }
 
-func (m *MusicRepository) Update(music *domain.Music) error {
-	return nil
+func (m *MusicRepository) Update(id int, musicUpdate *domain.Music) error {
+	for i, music := range m.Music {
+		if music.ID == id {
+			musicUpdate.ID = id
+			m.Music[i] = *musicUpdate
+			return nil
+		}
+	}
+
+	return errors.New("music doesn't exist")
 }
 
 func (m *MusicRepository) Delete(id int) error {
-	return nil
+	for i, music := range m.Music {
+		if music.ID == id {
+			before := m.Music[:i]
+			after := m.Music[i+1:]
+
+			m.Music = append(before, after...)
+			return nil
+
+		}
+	}
+
+	return errors.New("music with requested ID not founded")
 }
 
 func (m *MusicRepository) Get() ([]domain.Music, error) {
-
-	return nil, nil
+	return m.Music, nil
 }

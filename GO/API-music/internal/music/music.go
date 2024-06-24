@@ -6,7 +6,7 @@ import (
 
 type Music interface {
 	Create(music *domain.Music) error
-	Update(music *domain.Music) error
+	Update(id int, music *domain.Music) error
 	Delete(id int) error
 	Get() ([]domain.Music, error)
 }
