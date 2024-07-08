@@ -53,7 +53,7 @@ func (m *MusicRepository) Create(music *domain.Music) error {
 	//se utiliza para agregar elementos a un slice existente
 	m.Music = append(m.Music, addMusic)
 
-	//Si todo el proceso se realiza sin problemas, el método devuelve nil, indicando que no hubo errores.
+	//devuelve nil, indicando si todo salió bien y que no hubo errores.
 	return nil
 }
 
@@ -96,10 +96,8 @@ func (m *MusicRepository) Delete(id int) error {
 			return nil
 		}
 	}
-	//Si no se encuentra ninguna música con el ID especificado en el for loop,
+	//Si no se encuentra ninguna música con el ID especificado
 	//el método devuelve un error usando errors.New.
-	//Esto proporciona una manera de manejar situaciones donde se intenta eliminar una música
-	//que no existe en el repositorio.
 	return errors.New("music with requested ID not found")
 }
 
