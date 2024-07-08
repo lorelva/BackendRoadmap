@@ -14,7 +14,8 @@ func main() {
 
 	if err := cmd.Run(); err != nil {
 		log.Fatal(err)
+	} else {
+		println("Directory successfully zipped and moved.")
 	}
 
-	println("Directory successfully zipped and moved.")
 }
