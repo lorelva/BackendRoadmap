@@ -6,14 +6,19 @@ import "fmt"
 // Specific characters.
 
 func wordIndexing() {
-	word := "LOVELY" + "GLAMOUR"
+	word := "SYMPHONIC"
+	word2 := "METAL"
 
-	fmt.Println(string(word[0]))
-	fmt.Println(string(word[1]))
-	fmt.Println(string(word[11]))
-	fmt.Println(string(word[3]))
-	fmt.Println(string(word[6]))
-	fmt.Println(string(word[10]))
+	fmt.Println("Fisrt character:", string(word[0]))
+	fmt.Println("Character of the index 2:", string(word[2]))
+	fmt.Println("Last character:", string(word[len(word)-1]))
+
+	fmt.Println("\nAccess to first character of word2: ", string(word2[0]))
+	fmt.Println("Character of the index 3: ", string(word2[3]))
+	fmt.Println("Last character: ", string(word2[len(word2)-1]))
+
+	completeWord := word + " " + word2
+	fmt.Println(completeWord)
 
 }
 
