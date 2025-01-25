@@ -9,7 +9,7 @@ func main() {
 
 	str := ".lyah_valle_1268_gmail.com"
 
-	newString := strings.Replace(str, "_", "@", 1)
+	newString := strings.Replace(str, "_", "@", 2)
 	fmt.Println("New String : ", newString)
 
 	newString2 := strings.ReplaceAll(str, "_", " ")
